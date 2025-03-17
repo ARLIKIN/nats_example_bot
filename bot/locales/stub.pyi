@@ -5,34 +5,44 @@ class TranslatorRunner:
     def get(self, path: str, **kwargs) -> str: ...
     
     hello: Hello
-    user: User
-    admin: Admin
+    button: Button
+    no: No
+    send: Send
+    successfully: Successfully
+    text: Text
 
 
 class Hello:
     @staticmethod
-    def user(*, username) -> Literal["""Привет, { $username }."""]: ...
+    def user(*, username) -> Literal["""Привет, { $username }. Нажмите на кнопку"""]: ...
 
 
-class User:
-    button: UserButton
+class Button:
+    @staticmethod
+    def button() -> Literal["""Кнопка"""]: ...
 
     @staticmethod
-    def pressed() -> Literal["""Начинаем работать"""]: ...
+    def pressed() -> Literal["""Вы нажали на кнопку"""]: ...
 
 
-class UserButton:
+class No:
     @staticmethod
-    def hello() -> Literal["""Привет"""]: ...
+    def copy() -> Literal["""Данный тип апдейтов не поддерживается методом send_copy"""]: ...
 
 
-class Admin:
-    mes: AdminMes
-
-
-class AdminMes:
+class Send:
     @staticmethod
-    def hello(*, username) -> Literal["""Приветствую админа
+    def text() -> Literal["""Отправьте любой текст, который необходимо сохранить в FSM-хранилище NATS"""]: ...
 
-{ $username }"""]: ...
+
+class Successfully:
+    @staticmethod
+    def saved() -> Literal["""Ваш текст успешно сохранен в NATS FSM-storage
+
+Теперь вы можете получить данные из хранилища, отправив команду /read."""]: ...
+
+
+class Text:
+    @staticmethod
+    def only() -> Literal["""Пожалуйста, отправляйте только текстовые сообщения"""]: ...
 

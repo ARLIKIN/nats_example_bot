@@ -1,14 +1,15 @@
-#USER TEXT
-hello-user = Привет, { $username }.
-user-pressed = Начинаем работать
+hello-user = Привет, { $username }. Нажмите на кнопку
 
+button-button = Кнопка
 
-#USER BUTTON
-user-button-hello = Привет
+button-pressed = Вы нажали на кнопку
 
+no-copy = Данный тип апдейтов не поддерживается методом send_copy
 
-#ADMIN TEXT
-admin-mes-hello =
-    Приветствую админа
+send-text = Отправьте любой текст, который необходимо сохранить в FSM-хранилище NATS
 
-    {$username}
+successfully-saved = Ваш текст успешно сохранен в NATS FSM-storage
+                     
+                     Теперь вы можете получить данные из хранилища, отправив команду /read.
+
+text-only = Пожалуйста, отправляйте только текстовые сообщения
