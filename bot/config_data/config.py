@@ -13,6 +13,13 @@ class NatsConfig:
 
 
 @dataclass
+class NatsDelayedConsumerConfig:
+    subject: str
+    stream: str
+    durable_name: str
+
+
+@dataclass
 class PostgresConfig:
     debug: str
     postgres_db: str
@@ -25,6 +32,7 @@ class Config:
     tg_bot: TgBot
     nats: NatsConfig
     postgres: PostgresConfig
+    delayed_consumer: NatsDelayedConsumerConfig
 
 
 def load_config(path: str | None = None) -> Config:
@@ -38,5 +46,10 @@ def load_config(path: str | None = None) -> Config:
             postgres_db=env.str('POSTGRES_DB'),
             postgres_user=env.str('POSTGRES_USER'),
             postgres_password=env.str('POSTGRES_PASSWORD'),
+        ),
+        delayed_consumer=NatsDelayedConsumerConfig(
+            subject=env('NATS_DELAYED_CONSUMER_SUBJECT'),
+            stream=env('NATS_DELAYED_CONSUMER_STREAM'),
+            durable_name=env('NATS_DELAYED_CONSUMER_DURABLE_NAME')
         )
     )

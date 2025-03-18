@@ -10,6 +10,7 @@ class TranslatorRunner:
     send: Send
     successfully: Successfully
     text: Text
+    will: Will
 
 
 class Hello:
@@ -45,4 +46,16 @@ class Successfully:
 class Text:
     @staticmethod
     def only() -> Literal["""Пожалуйста, отправляйте только текстовые сообщения"""]: ...
+
+
+class Will:
+    @staticmethod
+    def delete(*, delay) -> Literal["""Это сообщение удалится через { $delay -&gt;
+[one] { $delay }
+[one]  секунду
+[few] { $delay }
+[few]  секунды
+*[other] { $delay }
+*[other]  секунд
+}"""]: ...
 

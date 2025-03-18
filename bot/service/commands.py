@@ -16,6 +16,10 @@ async def set_commands(bot: Bot):
             command='read',
             description='Read key'
         ),
+        BotCommand(
+            command='del',
+            description='Delete message delay'
+        )
     ]
 
     await bot.set_my_commands(commands, BotCommandScopeDefault())

@@ -10,6 +10,9 @@ from aiogram.types import (
     InlineKeyboardMarkup
 )
 from fluentogram import TranslatorRunner
+from nats.js import JetStreamContext
+
+from bot.service.delay_service.publisher import delay_message_deletion
 from bot.states.state_user import NatsTestSG
 
 if TYPE_CHECKING:
@@ -97,3 +100,22 @@ async def process_button_click(
     i18n: TranslatorRunner
 ):
     await callback.answer(text=i18n.button.pressed())
+
+
+@user_router.message(Command('del'))
+async def send_and_del_message(
+    message: Message,
+    i18n: TranslatorRunner,
+    js: JetStreamContext,
+    delay_del_subject: str
+) -> None:
+    delay = 3
+    msg: Message = await message.answer(text=i18n.will.delete(delay=delay))
+
+    await delay_message_deletion(
+        js=js,
+        chat_id=msg.chat.id,
+        message_id=msg.message_id,
+        subject=delay_del_subject,
+        delay=delay
+    )
